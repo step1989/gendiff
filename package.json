@@ -1,0 +1,45 @@
+{
+  "name": "diff-file-rsv",
+  "version": "1.0.0",
+  "description": "diff file",
+  "keywords": [
+    "diff file",
+    "hexlet",
+    "js"
+  ],
+  "bin": {
+    "gendiff": "dist/bin/gendiff.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/step1989/backend-project-lvl2.git"
+  },
+  "author": "Ryabukhin Stepan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/step1989/backend-project-lvl2/issues"
+  },
+  "homepage": "https://github.com/step1989/backend-project-lvl2#readme",
+  "dependencies": {
+    "commander": "^4.0.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.7.4",
+    "@babel/node": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.18.2"
+  }
+}
