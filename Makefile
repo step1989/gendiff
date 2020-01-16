@@ -9,3 +9,5 @@ build:
 	npm run build
 lint:
 	npx eslint .
+lintfix:
+	npx eslint --fix .
