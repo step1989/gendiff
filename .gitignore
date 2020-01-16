@@ -4,3 +4,4 @@
 *.save
 *.directory
 example_file/
+coverage/

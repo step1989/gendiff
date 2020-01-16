@@ -1,7 +1,6 @@
 install:
 	npm install
-start:
-	dist/bin/gendiff.js
+start: build test-coverage lintfix
 publish:
 	npm publish --dry-run
 build:
@@ -11,3 +10,5 @@ lint:
 	npx eslint .
 lintfix:
 	npx eslint --fix .
+test-coverage:
+	npm test -- --coverage

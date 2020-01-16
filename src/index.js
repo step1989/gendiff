@@ -1,7 +1,7 @@
-import commander from 'commander';
 import { difference } from 'lodash';
 
 const fs = require('fs');
+const program = require('commander');
 // const path = require('path')
 
 // разделители
@@ -46,20 +46,19 @@ const compare = (path1, path2) => {
     acc[`${sepPlus} ${key}`] = file2[key];
     return acc;
   }, resultExDateOnlyAfter);
-  console.log(result);
+  return JSON.stringify(result, null, ' ');
 };
 
 const gendiff = () => {
-  const program = require('commander');
   program.version('1.0.0')
     .description('Compares two configuration files and shows a difference.')
     .option('-f, --format [type]  output format')
     .arguments('<firstConfig>')
     .arguments('<secondConfig>')
     .action((firstConfig, secondConfig) => {
-      compare(firstConfig, secondConfig);
+      console.log(compare(firstConfig, secondConfig));
     })
     .parse(process.argv);
 };
 
-export default gendiff;
+export { gendiff, compare };
