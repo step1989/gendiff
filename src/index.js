@@ -31,22 +31,18 @@ const compare = (path1, path2) => {
   const resultExDateOnlyAfter = keys1.reduce((acc, key) => {
     // совпадение значений
     if (file1[key] === file2[key]) {
-      acc[`${septwoSpace}${key}`] = file1[key];
-      // если нет данных во втором файле
-    } else if (file2[key] === undefined) {
-      acc[`${sepMinus}${key}`] = file1[key];
-      // если есть различия в значениях полей
-    } else {
-      acc[`${sepPlus} ${key}`] = file2[key];
-      acc[`${sepMinus} ${key}`] = file1[key];
+      return `${acc}${septwoSpace}${key}: ${file1[key]}\n`;
     }
-    return acc;
-  }, {});
-  const result = keysOnlyAfter.reduce((acc, key) => {
-    acc[`${sepPlus} ${key}`] = file2[key];
-    return acc;
-  }, resultExDateOnlyAfter);
-  return JSON.stringify(result, null, ' ');
+    // если нет данных во втором файле
+    if (file2[key] === undefined) {
+      return `${acc}${sepMinus}${key}: ${file1[key]}\n`;
+    }
+    // если есть различия в значениях полей
+    const newAcc = `${acc}${sepPlus}${key}: ${file2[key]}\n`;
+    return `${newAcc}${sepMinus}${key}: ${file1[key]}\n`;
+  }, '');
+  const result = keysOnlyAfter.reduce((acc, key) => `${acc}${sepPlus}${key}: ${file2[key]}\n`, resultExDateOnlyAfter);
+  return `{\n${result}}`;
 };
 
 const gendiff = () => {
