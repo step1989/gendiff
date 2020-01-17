@@ -1,4 +1,4 @@
 #!/usr/bin/env nodejs
-import { gendiff } from '..';
+import gendiff from '..';
 
 gendiff();
