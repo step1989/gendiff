@@ -1,16 +1,12 @@
 import yaml from 'js-yaml';
-import reader from './reader';
-
-const path = require('path');
+import ini from 'ini';
 
 const mapper = {
   json: (data) => JSON.parse(data),
   yaml: (data) => yaml.safeLoad(data),
+  ini: (data) => ini.parse(data),
 };
 
-const parser = (filepath) => {
-  const fileExtension = path.extname(filepath).slice(1);
-  return mapper[fileExtension](reader(filepath));
-};
+const parser = (data, fileExtension) => mapper[fileExtension](data);
 
 export default parser;
