@@ -3,7 +3,7 @@ const sepPlus = '+ ';
 const sepMinus = '- ';
 const septwoSpace = '  ';
 
-const getIndent = (a) => septwoSpace.repeat(a);
+const getIndent = (count) => septwoSpace.repeat(count);
 
 const stringify = (obj, countIndent) => {
   const preIndent = getIndent(countIndent);
