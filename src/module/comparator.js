@@ -6,7 +6,7 @@ import render from './render';
 const path = require('path');
 
 
-const comparator = (path1, path2, format) => {
+const comparator = (path1, path2, format = 'pretty') => {
   // вопрос для обсуждения с ментором. Необходимо ли для каждого файла
   // получать расширение
   const fileExtension = path.extname(path1).slice(1);
@@ -15,7 +15,7 @@ const comparator = (path1, path2, format) => {
   const obj1 = parser(data1, fileExtension);
   const obj2 = parser(data2, fileExtension);
   const ast = astBuilder(obj1, obj2);
-  const print = render(ast);
+  const print = render(ast, format);
   return print;
 };
 

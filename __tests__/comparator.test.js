@@ -11,8 +11,8 @@ describe.each(['pretty', 'plain'])('test %s format', (outputFormat) => {
     const expected = fs.readFileSync(expectedPath, 'utf8');
     const beforeFilePath = path.join(__dirname, `${pathdir}before.${extensions}`);
     const afterFilePath = path.join(__dirname, `${pathdir}after.${extensions}`);
-    const received = comparator(beforeFilePath, afterFilePath);
-  
+    const received = comparator(beforeFilePath, afterFilePath, outputFormat);
+
     test(`Test compare ${extensions} file. Return ${outputFormat}`, () => {
       expect(received).toEqual(expected);
     });
