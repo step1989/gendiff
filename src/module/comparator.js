@@ -6,7 +6,7 @@ import render from './render';
 const path = require('path');
 
 
-const comparator = (path1, path2) => {
+const comparator = (path1, path2, format) => {
   // вопрос для обсуждения с ментором. Необходимо ли для каждого файла
   // получать расширение
   const fileExtension = path.extname(path1).slice(1);
