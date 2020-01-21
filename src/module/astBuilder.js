@@ -17,13 +17,14 @@ const astBuilder = (obj1, obj2) => {
     const value2 = get(obj2, key);
     // проверим что оба значения = объекты
     if (typeof value1 === 'object' && typeof value2 === 'object') {
-      return { type: 'noChange', key, value: astBuilder(value1, value2) };
+    //  return { type: 'noChange', key, value: astBuilder(value1, value2) };
+      return { type: 'hasChildren', key, value: astBuilder(value1, value2) };
     // если типы не равны. Сравниваем значения
     }
     if (value1 === value2) {
       return { type: 'noChange', key, value: value1 };
     }
-    return { type: 'change', key, value: { value1, value2 } }; // была проба с массивом
+    return { type: 'change', key, value: [value1, value2] }; // была проба с массивом
   });
   return result;
 };

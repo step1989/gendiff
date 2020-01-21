@@ -16,7 +16,6 @@ const comparator = (path1, path2) => {
   const obj2 = parser(data2, fileExtension);
   const ast = astBuilder(obj1, obj2);
   const print = render(ast);
-  console.log(print);
   return print;
 };
 

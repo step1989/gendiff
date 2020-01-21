@@ -3,60 +3,52 @@ const sepPlus = '+ ';
 const sepMinus = '- ';
 const septwoSpace = '  ';
 
-const mainstringify = (element, indent) => {
-  if (typeof element === 'object') {
-    const prefix = '{\n';
-    const postfix = `\n${indent}${septwoSpace}}`;
-    return Object.entries(element).reduce((acc, [key, value], index, thisArray) => {
-      if (index === 0 && index === thisArray.length - 1) {
-        return `${acc}${prefix}${indent}${septwoSpace.repeat(2)}${key}: ${value}${postfix}`;
-      }
-      if (index === 0) {
-        return `${acc}${prefix}${indent}${septwoSpace.repeat(2)}${key}: ${value}\n`;
-      }
-      if (index === thisArray.length - 1) {
-        return `${acc}${indent}${septwoSpace.repeat(2)}${key}: ${value}${postfix}`;
-      }
-      return `${acc}${indent}${septwoSpace.repeat(2)}${key}: ${value}`;
-    }, '');
-  }
-  return element;
+const getIndent = (a) => septwoSpace.repeat(a);
+
+const stringify = (obj, countIndent) => {
+  const preIndent = getIndent(countIndent);
+  const postIndent = getIndent(countIndent - 2);
+  const result = Object.entries(obj).reduce((acc, [key, value]) => `${acc}${preIndent}${key}: ${value}\n`, '{\n');
+  return `${result}${postIndent}}`;
 };
 
-const runRender = (ast, indent) => {
-  const result = ast.reduce((acc, { type, key, value }, index, thisArray) => {
-    const newIdent = indent.repeat(2);
-    // закрывающую скобку ставим после последнего элемента
-    // и если value не object(иначе скобка ставится в stringifi)
-    const postfix = (index === thisArray.length - 1) ? `${indent}${septwoSpace}}\n` : '';
-    if (Array.isArray(value)) {
-      return `${acc}${newIdent}${septwoSpace}${key}: {\n${runRender(value, newIdent)}`;
-    }
-    const newValue = mainstringify(value, newIdent);
-    switch (type) {
-      case 'noChange':
-        return `${acc}${newIdent}${septwoSpace}${key}: ${newValue}\n${postfix}`;
-      case 'del':
-        return `${acc}${newIdent}${sepMinus}${key}: ${newValue}\n${postfix}`;
-      case 'added':
-        return `${acc}${newIdent}${sepPlus}${key}: ${newValue}\n${postfix}`;
-      case 'change': {
-        const [value1, value2] = Object.values(value);
-        const firstLine = `${acc}${newIdent}${sepMinus}${key}: ${mainstringify(value1, indent.repeat(2))}\n`;
-        return `${firstLine}${newIdent}${sepPlus}${key}: ${mainstringify(value2, indent.repeat(2))}\n${postfix}`;
-      }
-      default:
-        return true;
-    }
-  }, '');
+const mapper = {
+  hasChildren: (acc, countIndent, key, value, runRender) => {
+    const indent = `${getIndent(countIndent)}${septwoSpace}`;
+    return `${acc}${indent}${key}: {\n${runRender(value, countIndent + 2)}${indent}}\n`;
+  },
+  noChange: (acc, countIndent, key, value) => {
+    const indent = `${getIndent(countIndent)}${septwoSpace}`;
+    return `${acc}${indent}${key}: ${value}\n`;
+  },
+  change: (acc, countIndent, key, [value1, value2]) => {
+    const newValue1 = (typeof value1 === 'object') ? stringify(value1, countIndent + 2) : value1;
+    const newValue2 = (typeof value2 === 'object') ? stringify(value2, countIndent + 2) : value2;
+    const indent = getIndent(countIndent);
+    const firstLine = `${acc}${indent}${sepMinus}${key}: ${newValue1}\n`;
+    return `${firstLine}${indent}${sepPlus}${key}: ${newValue2}\n`;
+  },
+  added: (acc, countIndent, key, value) => {
+    const newValue = (typeof value === 'object') ? stringify(value, countIndent + 2) : value;
+    const indent = `${getIndent(countIndent)}${sepPlus}`;
+    return `${acc}${indent}${key}: ${newValue}\n`;
+  },
+  del: (acc, countIndent, key, value) => {
+    const newValue = (typeof value === 'object') ? stringify(value, countIndent + 2) : value;
+    const indent = `${getIndent(countIndent)}${sepMinus}`;
+    return `${acc}${indent}${key}: ${newValue}\n`;
+  },
+
+};
+
+const runRender = (ast, countIndent) => {
+  const result = ast.reduce((acc, { type, key, value }) => mapper[type](acc, countIndent, key, value, runRender), '');
   return result;
 };
 
 const render = (ast) => {
-  const result = runRender(ast, '  ');
-  // нужно разобраться как избавиться от этого
-  const postResult = result.slice(0, -2).trimRight();
-  return `{\n${postResult}\n}`;
+  const result = runRender(ast, 1);
+  return `{\n${result.trimRight()}\n}`;
 };
 
 export default render;
