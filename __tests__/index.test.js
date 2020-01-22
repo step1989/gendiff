@@ -1,4 +1,4 @@
-import comparator from '../src/module/comparator';
+import gendiff from '../src';
 
 const fs = require('fs');
 const path = require('path');
@@ -11,7 +11,7 @@ describe.each(['pretty', 'plain', 'json'])('test %s format', (outputFormat) => {
     const expected = fs.readFileSync(expectedPath, 'utf8');
     const beforeFilePath = path.join(__dirname, `${pathdir}before.${extensions}`);
     const afterFilePath = path.join(__dirname, `${pathdir}after.${extensions}`);
-    const received = comparator(beforeFilePath, afterFilePath, outputFormat);
+    const received = gendiff(beforeFilePath, afterFilePath, outputFormat);
 
     test(`Test compare ${extensions} file. Return ${outputFormat}`, () => {
       expect(received).toEqual(expected);

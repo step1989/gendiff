@@ -1,17 +1,18 @@
-import comparator from './module/comparator';
+import path from 'path';
+import parser from './module/parsers';
+import reader from './module/reader';
+import astBuilder from './module/astBuilder';
+import render from './module/renders';
 
-const program = require('commander');
-
-const gendiff = () => {
-  program.version('1.0.0')
-    .description('Compares two configuration files and shows a difference.')
-    .option('-f, --format [type]', 'output format (pretty,plain)')
-    .arguments('<firstConfig>')
-    .arguments('<secondConfig>')
-    .action((firstConfig, secondConfig, option) => {
-      console.log(comparator(firstConfig, secondConfig, option.format));
-    })
-    .parse(process.argv);
+const gendiff = (path1, path2, format = 'pretty') => {
+  const fileExtension1 = path.extname(path1).slice(1);
+  const fileExtension2 = path.extname(path2).slice(1);
+  const data1 = reader(path1);
+  const data2 = reader(path2);
+  const obj1 = parser(data1, fileExtension1);
+  const obj2 = parser(data2, fileExtension2);
+  const ast = astBuilder(obj1, obj2);
+  return render(ast, format);
 };
 
 export default gendiff;

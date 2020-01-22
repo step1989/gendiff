@@ -4,17 +4,17 @@
   "key": "common",
   "value": [
    {
-    "type": "noChange",
+    "type": "noChanged",
     "key": "setting1",
     "value": "Value 1"
    },
    {
-    "type": "del",
+    "type": "deleted",
     "key": "setting2",
     "value": "200"
    },
    {
-    "type": "change",
+    "type": "changed",
     "key": "setting3",
     "value": [
      true,
@@ -28,7 +28,7 @@
     "key": "setting6",
     "value": [
      {
-      "type": "noChange",
+      "type": "noChanged",
       "key": "key",
       "value": "value"
      },
@@ -63,7 +63,7 @@
   "key": "group1",
   "value": [
    {
-    "type": "change",
+    "type": "changed",
     "key": "baz",
     "value": [
      "bas",
@@ -71,12 +71,12 @@
     ]
    },
    {
-    "type": "noChange",
+    "type": "noChanged",
     "key": "foo",
     "value": "bar"
    },
    {
-    "type": "change",
+    "type": "changed",
     "key": "nest",
     "value": [
      {
@@ -88,7 +88,7 @@
   ]
  },
  {
-  "type": "del",
+  "type": "deleted",
   "key": "group2",
   "value": {
    "abc": "12345",
