@@ -1,7 +1,8 @@
 {
   "name": "diff-file-rsv",
-  "version": "1.0.0",
-  "description": "diff file",
+  "version": "1.0.1",
+  "description": "Compare two files and output diffirence",
+  "main": "index.js",
   "keywords": [
     "diff file",
     "hexlet",
