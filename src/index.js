@@ -1,8 +1,8 @@
 import path from 'path';
-import parser from './module/parsers';
-import reader from './module/reader';
-import astBuilder from './module/astBuilder';
-import render from './module/renders';
+import parser from './parsers';
+import reader from './reader';
+import astBuilder from './astBuilder';
+import render from './formatters';
 
 const gendiff = (path1, path2, format = 'pretty') => {
   const fileExtension1 = path.extname(path1).slice(1);

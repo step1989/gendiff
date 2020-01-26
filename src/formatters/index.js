@@ -1,5 +1,5 @@
-import runPlainFormatter from './formatters/plain';
-import runPrettyFormatter from './formatters/pretty';
+import runPlainFormatter from './plain';
+import runPrettyFormatter from './pretty';
 
 const mapper = {
   plain: (data) => runPlainFormatter(data),
