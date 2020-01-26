@@ -1,5 +1,5 @@
 const mapper = {
-  hasChildren: (acc, path, ast, plainFormatter) => `${acc}${plainFormatter(ast, `${path}.`)}`,
+  hasChildren: (acc, path, value, plainFormatter, children) => `${acc}${plainFormatter(children, `${path}.`)}`,
   noChanged: (acc) => `${acc}`,
   changed: (acc, path, [value1, value2]) => {
     const newValue1 = (typeof value1 === 'object') ? '[complex value]' : value1;
@@ -13,9 +13,11 @@ const mapper = {
   deleted: (acc, path) => `${acc}Property '${path}' was removed\n`,
 };
 
-const plainFormatter = (ast, parentPath = '') => ast.reduce((acc, { type, key, value }) => {
+const plainFormatter = (ast, parentPath = '') => ast.reduce((acc, {
+  type, key, value, children,
+}) => {
   const path = `${parentPath}${key}`;
-  return mapper[type](acc, path, value, plainFormatter);
+  return mapper[type](acc, path, value, plainFormatter, children);
 }, '');
 
 const runPlainFormatter = (ast) => plainFormatter(ast).trim();

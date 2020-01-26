@@ -14,9 +14,9 @@ const stringify = (obj, countIndent) => {
 };
 
 const mapper = {
-  hasChildren: (acc, countIndent, key, value, prettyFormatter) => {
+  hasChildren: (acc, countIndent, key, value, prettyFormatter, children) => {
     const indent = `${getIndent(countIndent)}${prefNoChange}`;
-    return `${acc}${indent}${key}: {\n${prettyFormatter(value, countIndent + 2)}${indent}}\n`;
+    return `${acc}${indent}${key}: {\n${prettyFormatter(children, countIndent + 2)}${indent}}\n`;
   },
   noChanged: (acc, countIndent, key, value) => {
     const indent = `${getIndent(countIndent)}${prefNoChange}`;
@@ -41,8 +41,10 @@ const mapper = {
   },
 };
 
-const prettyFormatter = (ast, countIndent) => ast.reduce((acc, { type, key, value }) => {
-  const formatter = mapper[type](acc, countIndent, key, value, prettyFormatter);
+const prettyFormatter = (ast, countIndent) => ast.reduce((acc, {
+  type, key, value, children,
+}) => {
+  const formatter = mapper[type](acc, countIndent, key, value, prettyFormatter, children);
   return formatter;
 }, '');
 
