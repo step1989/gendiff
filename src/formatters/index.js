@@ -4,7 +4,7 @@ import runPrettyFormatter from './pretty';
 const mapper = {
   plain: runPlainFormatter,
   pretty: runPrettyFormatter,
-  json: (data) => JSON.stringify(data),
+  json: JSON.stringify,
 };
 
 const render = (ast, format) => mapper[format](ast);
