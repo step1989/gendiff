@@ -1,25 +1,24 @@
 const mapper = {
-  hasChildren: (acc, path, value, plainFormatter, children) => `${acc}${plainFormatter(children, `${path}.`)}`,
-  noChanged: (acc) => `${acc}`,
-  changed: (acc, path, [value1, value2]) => {
-    const newValue1 = (typeof value1 === 'object') ? '[complex value]' : value1;
-    const newValue2 = (typeof value2 === 'object') ? '[complex value]' : value2;
-    return `${acc}Property '${path}' was updated. From ${newValue1} to ${newValue2}\n`;
+  hasChildren: (path, { children }, getStrings) => `${getStrings(children, `${path}.`).join('')}`,
+  noChanged: () => '',
+  changed: (path, { value: values }) => {
+    const [valueBefore, valueAfter] = values;
+    const checkValueBefore = (typeof valueBefore === 'object') ? '[complex value]' : valueBefore;
+    const checkValueAfter = (typeof valueAfter === 'object') ? '[complex value]' : valueAfter;
+    return `Property '${path}' was updated. From ${checkValueBefore} to ${checkValueAfter}\n`;
   },
-  added: (acc, path, value) => {
-    const newValue = (typeof value === 'object') ? '[complex value]' : value;
-    return `${acc}Property '${path}' was added with value: ${newValue}\n`;
+  added: (path, { value }) => {
+    const checkValue = (typeof value === 'object') ? '[complex value]' : value;
+    return `Property '${path}' was added with value: ${checkValue}\n`;
   },
-  deleted: (acc, path) => `${acc}Property '${path}' was removed\n`,
+  deleted: (path) => `Property '${path}' was removed\n`,
 };
 
-const plainFormatter = (ast, parentPath = '') => ast.reduce((acc, {
-  type, key, value, children,
-}) => {
-  const path = `${parentPath}${key}`;
-  return mapper[type](acc, path, value, plainFormatter, children);
-}, '');
+const getStrings = (ast, parentPath = '') => ast.map((node) => {
+  const path = `${parentPath}${node.key}`;
+  return mapper[node.type](path, node, getStrings);
+});
 
-const runPlainFormatter = (ast) => plainFormatter(ast).trim();
+const runPlainFormatter = (ast) => getStrings(ast).join('').trim();
 
 export default runPlainFormatter;
