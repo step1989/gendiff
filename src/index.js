@@ -12,9 +12,7 @@ const gendiff = (path1, path2, format) => {
   const obj1 = parse(data1, fileExtension1);
   const obj2 = parse(data2, fileExtension2);
   const ast = getAstBuilder(obj1, obj2);
-  const rend = render(ast, format);
-  if (format === 'json') console.log(rend);
-  return rend;
+  return render(ast, format);
 };
 
 export default gendiff;
