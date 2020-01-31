@@ -2,7 +2,7 @@ import {
   union, has, get,
 } from 'lodash';
 
-const getAstBuilder = (obj1, obj2) => {
+const getAst = (obj1, obj2) => {
   const keys = union(Object.keys(obj1), Object.keys(obj2));
   const ast = keys.map((key) => {
     if (!has(obj1, key)) {
@@ -16,7 +16,7 @@ const getAstBuilder = (obj1, obj2) => {
     const value1 = get(obj1, key);
     const value2 = get(obj2, key);
     if (typeof value1 === 'object' && typeof value2 === 'object') {
-      return { type: 'hasChildren', key, children: getAstBuilder(value1, value2) };
+      return { type: 'hasChildren', key, children: getAst(value1, value2) };
     }
 
     if (value1 === value2) {
@@ -28,4 +28,4 @@ const getAstBuilder = (obj1, obj2) => {
   return ast;
 };
 
-export default getAstBuilder;
+export default getAst;

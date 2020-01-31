@@ -1,7 +1,7 @@
 import path from 'path';
 import parse from './parsers';
 import reader from './reader';
-import getAstBuilder from './astBuilder';
+import getAst from './astBuilder';
 import render from './formatters';
 
 const gendiff = (path1, path2, format) => {
@@ -11,7 +11,7 @@ const gendiff = (path1, path2, format) => {
   const data2 = reader(path2);
   const obj1 = parse(data1, fileExtension1);
   const obj2 = parse(data2, fileExtension2);
-  const ast = getAstBuilder(obj1, obj2);
+  const ast = getAst(obj1, obj2);
   return render(ast, format);
 };
 
