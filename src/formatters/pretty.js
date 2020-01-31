@@ -15,8 +15,8 @@ const stringifyObject = (obj, depth) => {
 
 const stringify = (key, value, depth, prefix = prefNoChange) => {
   const indent = `${getIndent(depth)}`;
-  const checkValue = (typeof value === 'object') ? stringifyObject(value, depth + 2) : value;
-  return `${indent}${prefix}${key}: ${checkValue}`;
+  const checkedValue = (typeof value === 'object') ? stringifyObject(value, depth + 2) : value;
+  return `${indent}${prefix}${key}: ${checkedValue}`;
 };
 
 const mapper = {
