@@ -8,9 +8,9 @@ const getIndent = (depth) => prefNoChange.repeat(depth);
 
 const stringifyObject = (obj, depth) => {
   const preIndent = getIndent(depth);
-  const postIndent = `\n${getIndent(depth - 2)}}`;
+  const postIndent = `${getIndent(depth - 2)}}`;
   const strings = Object.entries(obj).map(([key, value]) => `${preIndent}${key}: ${value}`);
-  return `{\n${strings.join('\n')}${postIndent}`;
+  return `{\n${strings.join('\n')}\n${postIndent}`;
 };
 
 const stringify = (key, value, depth, prefix = prefNoChange) => {
