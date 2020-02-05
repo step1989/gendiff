@@ -13,17 +13,19 @@ const getAst = (obj1, obj2) => {
       return { type: 'deleted', key, value: get(obj1, key) };
     }
 
-    const value1 = get(obj1, key);
-    const value2 = get(obj2, key);
-    if (typeof value1 === 'object' && typeof value2 === 'object') {
-      return { type: 'hasChildren', key, children: getAst(value1, value2) };
+    const valueBefore = get(obj1, key);
+    const valueAfter = get(obj2, key);
+    if (typeof valueBefore === 'object' && typeof valueAfter === 'object') {
+      return { type: 'hasChildren', key, children: getAst(valueBefore, valueAfter) };
     }
 
-    if (value1 === value2) {
-      return { type: 'noChanged', key, value: value1 };
+    if (valueBefore === valueAfter) {
+      return { type: 'noChanged', key, value: valueBefore };
     }
 
-    return { type: 'changed', key, value: [value1, value2] };
+    return {
+      type: 'changed', key, valueBefore, valueAfter,
+    };
   });
   return ast;
 };

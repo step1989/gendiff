@@ -1,16 +1,17 @@
 import { flattenDeep } from 'lodash';
 
-const checkObject = (value) => (typeof value === 'object' ? '[complex value]' : value);
+const getConvertedValue = (value) => (typeof value === 'object' ? '[complex value]' : value);
 
 const mapper = {
   hasChildren: (path, { children }, getStrings) => getStrings(children, `${path}.`),
-  noChanged: () => '',
-  changed: (path, { value: values }) => {
-    const [checkedBefore, checkedAfter] = values.map((value) => checkObject(value));
-    return `Property '${path}' was updated. From ${checkedBefore} to ${checkedAfter}`;
+  noChanged: () => null,
+  changed: (path, { valueBefore, valueAfter }) => {
+    const convertedValueBefore = getConvertedValue(valueBefore);
+    const convertedValueAfter = getConvertedValue(valueAfter);
+    return `Property '${path}' was updated. From ${convertedValueBefore} to ${convertedValueAfter}`;
   },
   added: (path, { value }) => {
-    const checkedValue = checkObject(value);
+    const checkedValue = getConvertedValue(value);
     return `Property '${path}' was added with value: ${checkedValue}`;
   },
   deleted: (path) => `Property '${path}' was removed`,
@@ -23,7 +24,7 @@ const getStrings = (ast, parentPath = '') => ast.map((node) => {
 
 const runPlainFormatter = (ast) => {
   const strings = flattenDeep(getStrings(ast));
-  return strings.filter((el) => el !== '').join('\n');
+  return strings.filter((el) => el !== null).join('\n');
 };
 
 export default runPlainFormatter;

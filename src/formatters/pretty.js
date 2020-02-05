@@ -21,15 +21,16 @@ const stringify = (key, value, depth, prefix = prefNoChange) => {
 
 const mapper = {
   hasChildren: (depth, { key, children }, getStrings) => {
-    const postfix = `\n${getIndent(depth)}${prefNoChange}}`;
-    const value = `{\n${getStrings(children, depth + 2).join('\n')}${postfix}`;
+    const postfix = `${getIndent(depth)}${prefNoChange}}`;
+    const value = `{\n${getStrings(children, depth + 2).join('\n')}\n${postfix}`;
     return stringify(key, value, depth);
   },
   noChanged: (depth, { key, value }) => stringify(key, value, depth),
-  changed: (depth, { key, value: values }) => values.map((value, index) => {
-    const prefix = index === 0 ? prefDel : prefAdd;
-    return stringify(key, value, depth, prefix);
-  }).join('\n'),
+  changed: (depth, { key, valueBefore, valueAfter }) => {
+    const lineDel = mapper.deleted(depth, { key, value: valueBefore });
+    const lineAdd = mapper.added(depth, { key, value: valueAfter });
+    return [lineDel, lineAdd].join('\n');
+  },
   added: (depth, { key, value }) => stringify(key, value, depth, prefAdd),
   deleted: (depth, { key, value }) => stringify(key, value, depth, prefDel),
 };

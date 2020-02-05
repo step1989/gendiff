@@ -16,6 +16,7 @@ const run = () => {
         console.log(gendiff(firstConfig, secondConfig, option.format));
       } catch (e) {
         mapper[e.code](e.path);
+        process.exit(-1);
       }
     })
     .parse(process.argv);
