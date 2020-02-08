@@ -1,6 +1,6 @@
 import program from 'commander';
 import gendiff from './index';
-import {version} from '../package.json';
+import { version } from '../package.json';
 
 const mapper = {
   EISDIR: (filepath) => console.log(`error: "${filepath}" is a folder`),
