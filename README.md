@@ -18,12 +18,15 @@
 
 
   ### Локальная установка
-  склонируйте проект
+  Cклонируйте проект
+  
   `git clone https://github.com/step1989/gendiff.git`
+  
   В папке с проектом выполните команды
-  `make build`
-  `make publish`
-  `make link`
+  
+  * `make build`
+  * `make publish`
+  * `make link`
 
 
   ### Использование
