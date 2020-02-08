@@ -13,8 +13,18 @@
   - построчный (plain)
   - JSON
   
-  ### Установка
+  ### Установка из npm
 ```sudo npm install -g diff-file-rsv```
+
+
+  ### Локальная установка
+  склонируйте проект
+  `git clone https://github.com/step1989/gendiff.git`
+  В папке с проектом выполните команды
+  `make build`
+  `make publish`
+  `make link`
+
 
   ### Использование
   Для вывода справки:

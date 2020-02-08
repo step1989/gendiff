@@ -12,3 +12,5 @@ lintfix:
 	npx eslint --fix .
 test-coverage:
 	npm test -- --coverage
+link:
+	npm link
