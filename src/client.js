@@ -1,5 +1,6 @@
 import program from 'commander';
 import gendiff from './index';
+import {version} from '../package.json';
 
 const mapper = {
   EISDIR: (filepath) => console.log(`error: "${filepath}" is a folder`),
@@ -7,7 +8,7 @@ const mapper = {
 };
 
 const run = () => {
-  program.version('1.0.2')
+  program.version(version)
     .description('Compares two configuration files and shows a difference.')
     .option('-f, --format [type]', 'output format (pretty, plain, json). Default output pretty', 'pretty')
     .arguments('<firstConfig> <secondConfig>')

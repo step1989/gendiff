@@ -1,6 +1,6 @@
 {
   "name": "diff-file-rsv",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Compare two files and output diffirence",
   "main": "index.js",
   "keywords": [
