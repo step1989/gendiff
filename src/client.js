@@ -2,8 +2,8 @@ import program from 'commander';
 import gendiff from './index';
 
 const mapper = {
-  EISDIR: (pathfile) => console.log(`error: "${pathfile}" is a folder`),
-  ENOENT: (pathfile) => console.log(`error: "${pathfile}" - no such file or not acces`),
+  EISDIR: (filepath) => console.log(`error: "${filepath}" is a folder`),
+  ENOENT: (filepath) => console.log(`error: "${filepath}" - no such file or not acces`),
 };
 
 const run = () => {

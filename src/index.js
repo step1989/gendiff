@@ -4,7 +4,7 @@ import parse from './parsers';
 import getAst from './astBuilder';
 import render from './formatters';
 
-const readFile = (pathfile) => fs.readFileSync(pathfile, 'utf8');
+const readFile = (filepath) => fs.readFileSync(filepath, 'utf8');
 
 const gendiff = (path1, path2, format) => {
   const fileExtension1 = path.extname(path1).slice(1);

@@ -5,3 +5,4 @@
 *.directory
 example_file/
 coverage/
+.vscode
